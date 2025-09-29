@@ -1,0 +1,586 @@
+/* ====================================================================
+   STYLE.CSS - CYBERDEFENDER PRO AI DEMO (FINAL CODE WITH THEME FIX)
+   ==================================================================== */
+
+/* --- CSS Variables for Theming (Used by the toggle) --- */
+:root {
+    /* Dark Theme (Default) */
+    --color-background-main: #1e1e1e;
+    --color-background-card: #2d2d30;
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #aaaaaa;
+    --color-border: #444444;
+
+    /* Primary/Accent Colors */
+    --color-primary: #3498db; /* Blue */
+    --color-primary-hover: #2980b9;
+    --color-secondary: #9b59b6; /* Purple for bot messages */
+    
+    /* Severity Colors */
+    --color-high: #e74c3c;    /* Red */
+    --color-medium: #f39c12;  /* Orange */
+    --color-low: #2ecc71;     /* Green */
+}
+
+/* Light Theme Overrides (This class is added/removed by script.js) */
+.light-theme {
+    --color-background-main: #f4f4f4;
+    --color-background-card: #ffffff;
+    --color-text-primary: #333333;
+    --color-text-secondary: #666666;
+    --color-border: #cccccc;
+
+    /* Light theme primary colors */
+    --color-primary: #007acc;
+    --color-primary-hover: #005f99;
+    --color-secondary: #8e44ad; /* Slightly darker purple for contrast */
+}
+
+/* --- Base Styles --- */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    /* Uses the variables */
+    background-color: var(--color-background-main);
+    color: var(--color-text-primary);
+    transition: background-color 0.3s, color 0.3s;
+    line-height: 1.6;
+}
+
+header {
+    background-color: var(--color-background-card);
+    color: var(--color-text-primary);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--color-border);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8em;
+}
+
+.container {
+    display: flex;
+    max-width: 1400px;
+    margin: 20px auto;
+    padding: 0 20px;
+    gap: 20px;
+}
+
+.scan-column, .results-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.scan-column {
+    flex: 1;
+    min-width: 350px;
+}
+
+.results-column {
+    flex: 2;
+    min-width: 700px;
+}
+
+/* --- Card Styles --- */
+.card {
+    background-color: var(--color-background-card);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--color-border);
+}
+
+.card h2 {
+    margin-top: 0;
+    color: var(--color-primary);
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    font-size: 1.4em;
+}
+
+/* --- Input and Button Styles --- */
+input[type="text"], input[type="email"], .chat-input-container input {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background-color: var(--color-background-main);
+    color: var(--color-text-primary);
+}
+
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    text-align: center;
+}
+
+.primary-btn {
+    background-color: var(--color-primary);
+    color: white;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.primary-btn:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.secondary-btn {
+    background-color: var(--color-border);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+}
+
+.secondary-btn:hover {
+    background-color: var(--color-text-secondary);
+}
+
+.header-btn {
+    background-color: transparent;
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+    padding: 8px 12px;
+}
+.header-btn:hover {
+    background-color: var(--color-primary);
+    color: var(--color-background-card);
+}
+
+/* --- Report and Results Styles --- */
+.report-header-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed var(--color-border);
+}
+
+.progress-section {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.scan-status {
+    font-weight: bold;
+    color: var(--color-text-secondary);
+    margin-bottom: 5px;
+}
+
+.progress-bar-container {
+    width: 100%;
+    background-color: var(--color-border);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 15px;
+    background-color: var(--color-primary);
+    width: 0%;
+    transition: width 0.3s;
+}
+
+.report-summary {
+    flex: 1.5;
+    background-color: var(--color-background-main);
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid var(--color-border);
+}
+
+.report-summary h3 {
+    margin: 0 0 10px 0;
+    color: var(--color-text-primary);
+    font-size: 1.1em;
+}
+
+.summary-stats {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.stat-item {
+    padding: 5px;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.stat-value.high { color: var(--color-high); }
+.stat-value.medium { color: var(--color-medium); }
+.stat-value.low { color: var(--color-low); }
+
+.stat-label {
+    font-size: 0.8em;
+    color: var(--color-text-secondary);
+}
+
+.report-actions-wrapper {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed var(--color-border);
+}
+
+.report-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.report-actions .btn {
+    flex: 1;
+}
+
+/* --- Vulnerability List (Dynamic) --- */
+.vulnerability-list-wrapper {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 20px;
+}
+
+.vulnerability-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dotted var(--color-border);
+}
+
+.vulnerability-item:last-child {
+    border-bottom: none;
+}
+
+.vulnerability-item .details {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.vulnerability-item .details h3 {
+    margin: 0;
+    font-size: 1em;
+    font-weight: normal;
+    color: var(--color-primary); /* Changed to primary color to emphasize it's a link */
+    text-decoration: underline;
+}
+
+.severity {
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 0.75em;
+    font-weight: bold;
+    color: var(--color-background-card);
+}
+
+.severity.high { background-color: var(--color-high); }
+.severity.medium { background-color: var(--color-medium); }
+.severity.low { background-color: var(--color-low); color: var(--color-background-main); }
+
+.vulnerability-item .info {
+    font-size: 0.8em;
+    color: var(--color-text-secondary);
+    display: flex;
+    gap: 15px;
+}
+.vulnerability-item .info .time {
+    font-style: italic;
+}
+
+/* --- History Card --- */
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dotted var(--color-border);
+    font-size: 0.9em;
+}
+.history-item span:first-child {
+    font-weight: bold;
+}
+.history-item:last-child {
+    border-bottom: none;
+}
+
+/* --- AI Bot Chat Styles --- */
+.ai-bot-card {
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-area {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background-color: var(--color-background-main);
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.user-message, .bot-message {
+    padding: 8px 12px;
+    border-radius: 15px;
+    max-width: 80%;
+    margin: 0;
+    line-height: 1.4;
+    font-size: 0.9em;
+}
+
+.user-message {
+    align-self: flex-end;
+    background-color: var(--color-primary);
+    color: white;
+    border-bottom-right-radius: 2px;
+}
+
+.bot-message {
+    align-self: flex-start;
+    background-color: var(--color-secondary);
+    color: white;
+    border-bottom-left-radius: 2px;
+}
+
+.chat-input-container {
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input-container input {
+    flex-grow: 1;
+    margin-bottom: 0;
+}
+
+.send-btn {
+    width: 100px;
+    background-color: var(--color-primary);
+    color: white;
+    padding: 10px;
+}
+
+.send-btn:hover {
+    background-color: var(--color-primary-hover);
+}
+
+/* --- Tool Menu Dropdown --- */
+.tool-menu-container {
+    position: relative;
+    align-self: flex-start;
+    margin-bottom: 15px;
+    z-index: 10;
+}
+
+.tool-menu-trigger {
+    cursor: pointer;
+    background-color: var(--color-border);
+    color: var(--color-text-primary);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    display: block;
+}
+
+.tool-menu-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--color-background-card);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    min-width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    padding: 5px 0;
+    display: none; /* Hidden by default */
+}
+
+/* Show dropdown when hovering over the container */
+.tool-menu-container:hover .tool-menu-dropdown {
+    display: block;
+}
+
+.tool-item {
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+    color: var(--color-text-primary);
+}
+
+.tool-item:hover {
+    background-color: var(--color-primary-hover);
+    color: white;
+}
+
+/* --- Scanner Info Card --- */
+.scanner-info-card h3 {
+    color: var(--color-text-primary);
+    font-size: 1.1em;
+    border-bottom: 1px dotted var(--color-border);
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.scanner-list {
+    font-size: 0.85em;
+    color: var(--color-text-secondary);
+}
+
+.scanner-list p {
+    margin: 5px 0;
+}
+
+.scanner-list p strong {
+    color: var(--color-text-primary);
+    font-weight: bold;
+}
+
+/* --- Build Option Card --- */
+.build-option-card .subtitle {
+    font-size: 0.9em;
+    color: var(--color-text-secondary);
+    margin-bottom: 15px;
+}
+.build-option-card .secondary-btn {
+    width: 100%;
+}
+
+
+/* --- MODAL STYLES (Email & Tech Stack) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: var(--color-background-card);
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    color: var(--color-text-primary);
+}
+
+.modal-content h2 {
+    color: var(--color-primary);
+    margin-top: 0;
+    border-bottom: 2px solid var(--color-primary);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.modal-content p {
+    color: var(--color-text-secondary);
+    margin-bottom: 20px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-actions .btn {
+    width: auto;
+    margin-top: 0;
+}
+
+.tech-stack-results-area {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: var(--color-background-main);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    min-height: 80px;
+}
+
+.tech-stack-results-area h4 {
+    color: var(--color-primary);
+    margin: 0 0 10px 0;
+}
+.tech-stack-results-area p, .tech-stack-results-area ul {
+    font-size: 0.9em;
+    color: var(--color-text-secondary);
+    margin-top: 5px;
+}
+.tech-stack-results-area ul {
+    padding-left: 20px;
+}
+
+
+.hidden {
+    display: none !important;
+}
+
+
+/* --- Media Queries for Responsiveness --- */
+@media (max-width: 1000px) {
+    .container {
+        flex-direction: column;
+        padding: 0 10px;
+    }
+    .scan-column, .results-column {
+        flex: 1;
+        min-width: unset;
+        width: 100%;
+    }
+    .report-header-block {
+        flex-direction: column;
+    }
+    .progress-section {
+        margin-bottom: 15px;
+        margin-right: 0;
+    }
+    .summary-stats {
+        justify-content: space-between;
+    }
+    .chat-area {
+        height: 350px;
+    }
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.5em;
+    }
+    .report-actions {
+        flex-direction: column;
+    }
+    .report-actions .btn {
+        width: 100%;
+    }
+    .modal-content {
+        padding: 20px;
+    }
+    .modal-actions {
+        flex-direction: column-reverse;
+    }
+}

@@ -1,0 +1,185 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberDefender Pro</title>
+    
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1>CyberDefender Pro</h1>
+        <button id="theme-toggle" class="header-btn">
+            <i class="fas fa-cog"></i> Toggle Theme
+        </button>
+    </header>
+
+    <main class="container">
+        <section class="scan-column">
+            <div class="card scan-card">
+                <h2>Scan</h2>
+                <input type="text" placeholder="Enter domain or IP" id="domain-ip">
+                <button class="btn primary-btn" onclick="startScan()">Start Scan</button>
+            </div>
+
+            <div class="card build-option-card">
+                <h2>Build Option: Tech Stack <i class="fas fa-hammer"></i></h2>
+                <p class="subtitle">Find out what tools were used to build an app or website.</p>
+                <button class="btn secondary-btn" onclick="showTechStackFinder()">
+                    <i class="fas fa-search"></i> Launch Tech Finder
+                </button>
+            </div>
+            
+            <div class="card ai-bot-card">
+                <h2>AI Bot <i class="fas fa-robot"></i></h2>
+                <div class="chat-area" id="chat-area">
+                    <div class="tool-menu-container">
+        <span class="tool-menu-trigger">
+            Available Tools ▼
+        </span>
+        <div class="tool-menu-dropdown">
+            <div class="tool-item" onclick="selectTool('Nmap scan for server-01.cloud')">Nmap Scan 🔎</div>
+            <div class="tool-item" onclick="selectTool('Burp suite for api.service/users/')">Burp Suite 🕸️</div>
+            <div class="tool-item" onclick="selectTool('John the Ripper on NTLM hashes')">John/Hashcat 🔑</div>
+            <div class="tool-item" onclick="selectTool('Hydra brute force ssh server-20')">Hydra Brute Force 💥</div>
+            <div class="tool-item" onclick="selectTool('Password Attack on API token')">Password Attack 🗝️</div>
+            <div class="tool-item" onclick="selectTool('Aircrack-ng on WPA2 network')">Wireless Attack 📶</div> 
+            <div class="tool-item" onclick="selectTool('Ghidra analysis on binary file')">Code Analysis ⚙️</div>
+            <div class="tool-item" onclick="selectTool('Metasploit exploit on 192.168.1.10')">Metasploit 💣</div>
+            <div class="tool-item" onclick="selectTool('Wireshark packet capture analysis')">Wireshark 🖧</div>
+            <div class="tool-item" onclick="selectTool('IDS alert for SQL injection')">IDS Alert 🚨</div>
+        </div>
+    </div>
+    
+                    <p class="bot-message">Hello! Ask me about security concepts, vulnerability fixes, or scan results.</p>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" placeholder="Ask the AI (e.g., how to fix XSS)" id="ai-query" onkeypress="handleKeyPress(event)">
+                    <button class="btn send-btn" onclick="sendQuery()">Send</button>
+                </div>
+            </div>
+            
+        </section>
+
+        <section class="results-column">
+            <div class="card results-card">
+                <h2>Scan Results</h2>
+                
+                <div class="report-header-block">
+                    <div class="progress-section">
+                        <p class="scan-status">Scanning <span id="scan-percentage">60</span>%</p>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="scan-progress" style="width: 60%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="report-summary">
+                        <h3>Summary Statistics</h3>
+                        <div class="summary-stats">
+                            <div class="stat-item">
+                                <span class="stat-value high">5</span>
+                                <span class="stat-label">Critical</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value medium">7</span>
+                                <span class="stat-label">Warnings</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value low">3</span>
+                                <span class="stat-label">Informational</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-actions-wrapper hidden" id="report-actions-wrapper">
+                    <div class="report-actions">
+                        <button class="btn secondary-btn" onclick="downloadReport()">
+                            <i class="fas fa-file-pdf"></i> Download PDF
+                        </button>
+                        <button class="btn secondary-btn" onclick="emailReport()">
+                            <i class="fas fa-envelope"></i> Email Report
+                        </button>
+                    </div>
+                </div>
+
+                <h3>Detailed Findings (Total: 0)</h3>
+                
+                <div class="vulnerability-list-wrapper" id="vulnerability-summary-list">
+                    <div style="text-align: center; color: var(--color-text-secondary); padding: 20px;">
+                        Start a scan to see detailed vulnerability findings.
+                    </div>
+                </div>
+                
+                <div id="report-details" class="card" style="margin-top: 20px; padding: 20px; border: 2px solid #3498db; display: none;">
+                    <h3>Detailed Report:</h3>
+                    <p>Click on any vulnerability above to view the full details.</p>
+                </div>
+                
+                <div class="scanner-info-card">
+                    <h3>Scanner Information & Tools Legend</h3>
+                    <div class="scanner-list">
+                        <p><strong>OWASP ZAP:</strong> Comprehensive open-source web application security scanner.</p>
+                        <p><strong>Burp Suite:</strong> Industry-standard proxy tool for manual and automated web application testing.</p>
+                        <p><strong>Nmap:</strong> Network discovery and security auditing utility (used for port/service detection).</p>
+                        <p><strong>Nessus / OpenVAS:</strong> Widely used commercial/open-source vulnerability assessment platforms.</p>
+                        <p><strong>Nikto:</strong> Open-source web server scanner that performs comprehensive tests against web servers.</p>
+                        <p><strong>Hydra:</strong> Fast and flexible login cracker, often used for brute-forcing weak credentials.</p>
+                    </div>
+                </div>
+                </div> 
+
+            <div class="card history-card">
+                <h2>Scan History</h2>
+                <div class="history-item">
+                    <span>example.com</span>
+                    <span>Scan Completed</span>
+                    <span class="time">9:04 AM</span>
+                </div>
+                <div class="history-item">
+                    <span>testsite.org</span>
+                    <span>Scan Completed</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="email-modal" class="modal-overlay hidden" onclick="closeModal(event, 'email-modal')">
+        <div class="modal-content">
+            <h2><i class="fas fa-envelope"></i> Report Delivery Options</h2>
+            <p>Enter your email below to get an emailed copy of the report, or simply click download to proceed.</p>
+
+            <input type="email" placeholder="Enter your email (Optional)" id="email-for-report" style="width: 100%; padding: 10px; margin-bottom: 15px;">
+            <div class="modal-actions">
+                <button class="btn primary-btn" onclick="confirmDownload()">
+                    <i class="fas fa-download"></i> Confirm Download
+                </button>
+                <button class="btn secondary-btn" onclick="closeModal(null, 'email-modal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="tech-stack-modal" class="modal-overlay hidden" onclick="closeModal(event, 'tech-stack-modal')">
+        <div class="modal-content">
+            <h2><i class="fas fa-hammer"></i> Technology Stack Finder</h2>
+            <p>Enter a web app URL or well-known service name (e.g., Google, Amazon, Facebook) to get an estimate of its core build technologies.</p>
+
+            <input type="text" placeholder="Enter App or Web App Name/URL" id="tech-stack-input">
+            <div class="modal-actions">
+                <button class="btn primary-btn" onclick="findTechStack()">Search Stack</button>
+                <button class="btn secondary-btn" onclick="closeModal(null, 'tech-stack-modal')">Close</button>
+            </div>
+
+            <div id="tech-stack-results" class="tech-stack-results-area">
+                <p>Results will appear here...</p>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+    
+</body>
+</html>
